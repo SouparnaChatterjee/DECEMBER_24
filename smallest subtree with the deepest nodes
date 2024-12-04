@@ -1,0 +1,26 @@
+class Solution {
+public:
+    // Helper function to return the node and the depth of the deepest node in the subtree
+    pair<TreeNode*, int> dfs(TreeNode* node) {
+        if (!node) return {nullptr, 0};  // Base case: if the node is null, return depth 0
+
+        // Recursively find the deepest node in the left and right subtrees
+        auto left = dfs(node->left);
+        auto right = dfs(node->right);
+
+        // Compare the depths of the left and right subtrees
+        if (left.second > right.second) {
+            return {left.first, left.second + 1};  // Left subtree is deeper, propagate it
+        } else if (left.second < right.second) {
+            return {right.first, right.second + 1};  // Right subtree is deeper, propagate it
+        } else {
+            // Both subtrees are at the same depth, the current node is the LCA of deepest nodes
+            return {node, left.second + 1};  // Return current node with increased depth
+        }
+    }
+
+    // Function to return the subtree containing all the deepest nodes
+    TreeNode* subtreeWithAllDeepest(TreeNode* root) {
+        return dfs(root).first;  // Start DFS from the root and return the subtree root
+    }
+};
