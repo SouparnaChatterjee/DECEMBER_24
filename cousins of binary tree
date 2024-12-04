@@ -1,0 +1,39 @@
+class Solution {
+public:
+    struct NodeInfo {
+        TreeNode* parent;
+        int level;
+    };
+
+    NodeInfo findNode(TreeNode* root, int value) {
+        queue<pair<TreeNode*, TreeNode*>> q; // Pair of (current node, parent node)
+        q.push({root, nullptr});
+        int level = 0;
+
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; ++i) {
+                auto [node, parent] = q.front();
+                q.pop();
+
+                if (node->val == value) return {parent, level};
+
+                if (node->left) q.push({node->left, node});
+                if (node->right) q.push({node->right, node});
+            }
+            level++;
+        }
+
+        return {nullptr, -1};
+    }
+
+    bool isCousins(TreeNode* root, int x, int y) {
+        if (!root) return false;
+
+        NodeInfo xInfo = findNode(root, x);
+        NodeInfo yInfo = findNode(root, y);
+
+        // Check if the nodes are at the same level but have different parents
+        return (xInfo.level == yInfo.level && xInfo.parent != yInfo.parent);
+    }
+};
