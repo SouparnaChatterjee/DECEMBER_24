@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x < 0) return false; // Negative numbers are not palindromes.
+        string s = to_string(x); // Convert integer to string.
+        int start = 0;
+        int end = s.size() - 1;
+        
+        // Check if characters from both ends match.
+        while (start < end) {
+            if (s[start] != s[end]) {
+                return false; // Not a palindrome if mismatch found.
+            }
+            start++;
+            end--;
+        }
+        
+        return true; // If all characters matched, it's a palindrome.
+    }
+};
