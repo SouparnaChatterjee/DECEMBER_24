@@ -1,0 +1,12 @@
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+    return checkSymm(root, root);    
+    }
+    bool checkSymm(TreeNode* p, TreeNode* q)
+    {
+         if(p==NULL && q==NULL) return true;
+        if(p==NULL || q==NULL) return false;
+        return (p->val==q->val) && checkSymm(p->left,q->right) && checkSymm(p->right,q->left);
+    }
+};
