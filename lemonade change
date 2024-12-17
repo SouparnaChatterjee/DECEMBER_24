@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool lemonadeChange(vector<int>& bills) {
+        int five = 0, ten = 0;
+        
+        for (int bill : bills) {
+            if (bill == 5) {
+                five++; // Increment $5 count
+            } else if (bill == 10) {
+                if (five > 0) {
+                    five--; // Use one $5 bill for change
+                    ten++;  // Increment $10 count
+                } else {
+                    return false; // Not enough $5 bills for change
+                }
+            } else { // bill == 20
+                if (ten > 0 && five > 0) {
+                    ten--; // Use one $10 bill
+                    five--; // Use one $5 bill
+                } else if (five >= 3) {
+                    five -= 3; // Use three $5 bills
+                } else {
+                    return false; // Not enough change
+                }
+            }
+        }
+        
+        return true; // Successfully provided change for all customers
+    }
+};
