@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<vector<int>> levelOrder(Node* root) {
+        // Initialize a result vector to store levels
+        vector<vector<int>> res;
+        
+        // Edge case: if the tree is empty
+        if (!root) return res;
+        
+        // Initialize a queue for BFS
+        queue<Node*> q;
+        q.push(root);
+        
+        // Perform BFS
+        while (!q.empty()) {
+            int size = q.size(); // Get the number of nodes at the current level
+            vector<int> currentLevel; // Vector to store current level's nodes
+            
+            // Process all nodes at the current level
+            for (int i = 0; i < size; ++i) {
+                Node* node = q.front();
+                q.pop();
+                
+                // Add the current node's value to the current level
+                currentLevel.push_back(node->val);
+                
+                // Add all children of the current node to the queue
+                for (Node* child : node->children) {
+                    q.push(child);
+                }
+            }
+            
+            // Add the current level to the result
+            res.push_back(currentLevel);
+        }
+        
+        return res; // Return the level order traversal
+    }
+};
